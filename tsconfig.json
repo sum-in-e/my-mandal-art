@@ -1,20 +1,31 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "node",
+    "baseUrl": ".",
+    "paths": {
+      "api/*": ["src/api/*"],
+      "store/*": ["src/store/*"],
+      "components/*": ["src/components/*"],
+      "container/*": ["src/container/*"],
+      "utils/*": ["src/utils/*"],
+      "styles/*": ["src/styles/*"]
+    },
+    "jsxImportSource": "@emotion/react",
+    "target": "es5", // ECMAScript 목표 버전 설정: 'ES3'(기본), 'ES5', 'ES2015', 'ES2016', 'ES2017','ES2018', 'ES2019', 'ES2020', or 'ESNEXT'
+    "module": "esnext", //생성될 모듈 코드 설정: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', 'es2020', or 'ESNext'
+    "lib": ["dom", "dom.iterable", "esnext"], // 컴파일 과정에 사용될 라이브러리 파일 설정
+    "allowJs": true, // JavaScript 파일 컴파일 허용
+    "strict": true, // 모든 엄격한 유형 검사 옵션 활성화
+    "jsx": "preserve", // 생성될 JSX 코드 설정: 'preserve', 'react-native', or 'react'.
+    "noEmit": true, // 출력 방출(emit) 유무 설정
+    "incremental": true, // 증분 컴파일 활성화
+    "isolatedModules": true, // 각 파일을 별도 모듈로 변환 ('ts.transpileModule'과 유사)
+    "noImplicitAny": true, // 명시적이지 않은 'any' 유형으로 표현식 및 선언 사용 시 오류 발생
+    "moduleResolution": "node", // 모듈 분석 방법 설정: 'node' (Node.js) 또는 'classic' (TypeScript pre-1.6).
+    "esModuleInterop": true, // 모든 가져오기에 대한 네임스페이스 객체 생성을 통해 CommonJS와 ES 모듈 간의 상호 운용성을 제공. 'allowSyntheticDefaultImports' 암시
     "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true
+    "skipLibCheck": true, //선언 파일 유형 검사 스킵
+    "forceConsistentCasingInFileNames": true // 동일한 파일에 대한 일관되지 않은 케이스 참조를 허용하지 않음
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"]
+  "include": ["next-env.d.ts", "src/**/*.tsx"],
+  "exclude": ["node_modules", "build", "**/*.(spec|test).ts"]
 }
