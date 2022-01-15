@@ -2,12 +2,12 @@ import { Box, Heading, Text } from '@chakra-ui/react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 
-const SignIn: NextPage = () => {
+const SigninPage: NextPage = () => {
   return (
     <div>
       <Head>
         <title>My Mandal Art | SignIn</title>
-        <meta name="description" content="SignIn" />
+        <meta name="description" content="Signin" />
       </Head>
 
       <main>
@@ -21,4 +21,4 @@ const SignIn: NextPage = () => {
   );
 };
 
-export default SignIn;
+export default SigninPage;

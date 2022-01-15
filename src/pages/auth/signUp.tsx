@@ -1,24 +1,21 @@
 import { Box, Heading, Text } from '@chakra-ui/react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
+import { Signup } from 'components/Auth';
 
-const SignUp: NextPage = () => {
+const SignupPage: NextPage = () => {
   return (
     <div>
       <Head>
         <title>My Mandal Art | SignUp</title>
-        <meta name="description" content="SignUp" />
+        <meta name="description" content="Signup" />
       </Head>
 
       <main>
-        <Box>
-          <Heading as="h1" size="4xl" color="highlight">
-            회원가입
-          </Heading>
-        </Box>
+        <Signup />
       </main>
     </div>
   );
 };
 
-export default SignUp;
+export default SignupPage;

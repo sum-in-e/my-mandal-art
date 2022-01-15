@@ -5,11 +5,33 @@
     "browser": true, // browser 인식 OK
     "es6": true // es6 버전사용 OK
   },
-  "extends": ["react-app", "prettier/prettier"],
-  "plugins": ["react-hooks", "simple-import-sort", "prettier"],
+  "parser": "@typescript-eslint/parser", // eslint가 타입스크립트를 해석할 수 있도록 지정
+  "extends": [
+    "next",
+    "prettier/prettier",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "eslint:recommended"
+  ],
+  "plugins": [
+    "@typescript-eslint", // 타입스크립트 문법
+    "react-hooks",
+    "react", // 리액트 문법
+    "simple-import-sort",
+    "prettier"
+  ],
   "rules": {
+    "no-console": 1,
     "prettier/prettier": "error",
     "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": [
+      "warn",
+      {
+        "enableDangerousAutofixThisMayCauseInfiniteLoops": true
+      }
+    ],
+    "@typescript-eslint/no-redeclare": 0,
+    "@typescript-eslint/no-unused-vars": ["warn"],
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
     "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 0 }],
@@ -28,6 +50,7 @@
       "error",
       { "blankLine": "always", "prev": "*", "next": "return" }
     ],
-    "@typescript-eslint/no-redeclare": 0
+    "no-unused-vars": "warn",
+    "no-else-return": "error"
   }
 }
