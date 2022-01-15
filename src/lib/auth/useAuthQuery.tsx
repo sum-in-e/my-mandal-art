@@ -3,13 +3,27 @@ import { useRouter } from 'next/router';
 import { FirebaseError } from 'firebase/app';
 import { UserCredential } from 'firebase/auth';
 
-import { signupWithEmailApi, signinWithGoogleApi } from 'lib/auth/authApi';
-import { SignupWithEmailProps, SigninWithGoogleProps } from 'lib/auth/authType';
+import {
+  signupWithEmailApi,
+  signinWithEmailApi,
+  signinWithGoogleApi,
+} from 'lib/auth/authApi';
+import {
+  SignupWithEmailProps,
+  SigninWithEmailProps,
+  SigninWithGoogleProps,
+} from 'lib/auth/authType';
 import {
   EMAIL_RULE_GUIDANCE_TEXT,
   EMAIL_EXIST_TEXT,
   PW_RULE_GUIDANCE_TEXT,
-  POPUP_CLOSED_BY_USER,
+  SIGNUP_FAILED_TEXT,
+  POPUP_CLOSED_BY_USER_TEXT,
+  EMAIL_NOT_EXIST_TEXT,
+  WRONG_PASSWORD_TEXT,
+  AUTH_TOO_MANY_REQUEST_TEXT,
+  SIGNIN_FAILED_TEXT,
+  INVALIED_EMAIL_TEXT,
 } from 'constants/auth';
 
 /**
@@ -41,9 +55,44 @@ const useSignupWithEmail = (): UseMutationResult<
         variables.setPasswordWarning(PW_RULE_GUIDANCE_TEXT);
       } else {
         // TODO: 개발자 컨텍 수단 안내
-        variables.setSignupWarning(
-          '계정 생성 도중 오류가 발생했습니다. 개발자에게 문의해주세요. (여기에 개발자 컨텍수단 적기)',
-        );
+        variables.setSignupWarning(SIGNUP_FAILED_TEXT);
+      }
+    },
+  });
+};
+
+/**
+ * 이메일 로그인을 하는 mutation입니다.
+ * @param email
+ * @param password
+ * @param setEmailWarning - 이메일 에러 문구 setState
+ * @param setPasswordWarning - 비밀번호 에러 문구 setState
+ * @param setSigninWarning - 이메일 로그인 에러 문구 setState
+ *
+ */
+const useSigninWithEmail = (): UseMutationResult<
+  UserCredential,
+  FirebaseError,
+  SigninWithEmailProps
+> => {
+  const router = useRouter();
+
+  return useMutation(signinWithEmailApi, {
+    onSuccess: (result) => {
+      router.push('/mandalArt/write');
+    },
+    onError: (error, variables) => {
+      if (error.code === 'auth/user-not-found') {
+        variables.setEmailWarning(EMAIL_NOT_EXIST_TEXT);
+      } else if (error.code === 'auth/invalid-email') {
+        variables.setEmailWarning(INVALIED_EMAIL_TEXT);
+      } else if (error.code === 'auth/wrong-password') {
+        variables.setPasswordWarning(WRONG_PASSWORD_TEXT);
+      } else if (error.code === 'auth/too-many-requests') {
+        variables.setSigninWarning(AUTH_TOO_MANY_REQUEST_TEXT);
+      } else {
+        // TODO: 개발자 컨텍 수단 안내
+        variables.setSigninWarning(SIGNIN_FAILED_TEXT);
       }
     },
   });
@@ -67,7 +116,7 @@ const useSigninWithGoogle = (): UseMutationResult<
     },
     onError: (error, variables) => {
       if (error.code === 'auth/popup-closed-by-user') {
-        variables.setGoogleWarning(POPUP_CLOSED_BY_USER);
+        variables.setGoogleWarning(POPUP_CLOSED_BY_USER_TEXT);
       } else {
         variables.setGoogleWarning(error.message);
       }
@@ -75,4 +124,4 @@ const useSigninWithGoogle = (): UseMutationResult<
   });
 };
 
-export { useSignupWithEmail, useSigninWithGoogle };
+export { useSignupWithEmail, useSigninWithEmail, useSigninWithGoogle };

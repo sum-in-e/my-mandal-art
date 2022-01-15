@@ -14,7 +14,7 @@ const Footer: FunctionComponent = () => {
       height="150"
       paddingTop="4"
       paddingBottom="4"
-      bg="dark"
+      bg="black"
     >
       <Heading as="h2" size="xl" color="primary">
         Contact

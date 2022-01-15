@@ -3,11 +3,15 @@ import { mode } from '@chakra-ui/theme-tools';
 
 const overrides = {
   colors: {
-    primary: '#FFFFFF', // 70%
-    secondary: '#7FD1AE', // 25%
-    highlight: '#8083FF', // 5%
+    primary: '#ffffff', // 70%
+    primary_darker: '#EBEBEB', // 70%
+    secondary: '#554516', // 25%
+    secondary_darker: '#554516',
+    highlight: '#0064FF', // 5%
+    highlight_darker: '#0032ff', // 5%
     error: '#f03e3e',
-    black: '#3B3B3B',
+    success: '#008A61',
+    black: '#333333',
     light_black: '#5E5E5E',
     grey: '#C6C6C6',
     light_grey_1: '#E0E0E0',

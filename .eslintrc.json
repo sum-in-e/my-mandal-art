@@ -44,6 +44,10 @@
     "quotes": ["error", "single"],
     "no-tabs": "error",
     "semi": ["error", "never"],
+    "no-return-await": "error",
+    "no-trailing-spaces": "error",
+    "prefer-const": "error",
+    "no-var": "error",
     "import/no-anonymous-default-export": 0,
     "object-shorthand": "error",
     "padding-line-between-statements": [
