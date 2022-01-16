@@ -12,9 +12,10 @@ import {
   Text,
   Center,
   Link,
+  InputLeftElement,
 } from '@chakra-ui/react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import { BsGoogle } from 'react-icons/bs';
+import { FcGoogle } from 'react-icons/fc';
 import { Divider } from '@chakra-ui/react';
 
 import { useSignupWithEmail, useSigninWithGoogle } from 'lib/auth/useAuthQuery';
@@ -24,6 +25,9 @@ import {
   PW_REQUIERED_TEXT,
   PW_RULE_GUIDANCE_TEXT,
 } from 'constants/auth';
+import { IoIosCloseCircle } from 'react-icons/io';
+import { AiOutlineUser } from 'react-icons/ai';
+import { RiLockPasswordLine } from 'react-icons/ri';
 
 const Signup: FunctionComponent = () => {
   const REG_EMAIL =
@@ -36,7 +40,6 @@ const Signup: FunctionComponent = () => {
   const [passwordWarning, setPasswordWarning] = useState<string>('');
   const [signupWarning, setSignupWarning] = useState<string>('');
   const [googleWarning, setGoogleWarning] = useState<string>('');
-  const [isShowPassword, setIsShowPassword] = useState<boolean>(false);
 
   const { mutate: signupWithEmail, isLoading: isLoadingSignupWithEmail } =
     useSignupWithEmail();
@@ -45,7 +48,16 @@ const Signup: FunctionComponent = () => {
     isLoading: isLoadingSigninWithGoogle,
   } = useSigninWithGoogle();
 
-  const handleShowPassword = () => setIsShowPassword((prev) => !prev);
+  const handleClickClear = (type: 'email' | 'password') => {
+    if (type === 'email') {
+      setEmail('');
+      setEmailWarning(EMAIL_REQUIERED_TEXT);
+    }
+    if (type === 'password') {
+      setPassword('');
+      setPasswordWarning(PW_REQUIERED_TEXT);
+    }
+  };
 
   const handleSetPasswordWarning = (value: string) => {
     if (value === '') setPasswordWarning(PW_REQUIERED_TEXT);
@@ -106,37 +118,38 @@ const Signup: FunctionComponent = () => {
   };
 
   return (
-    <Container>
+    <Container padding="50px 0" maxWidth="40ch">
       <Heading
         as="h2"
-        fontSize="x-large"
+        fontSize="xxx-large"
         fontWeight="bold"
         color="black"
-        marginBottom="30px"
+        marginBottom="40px"
         textAlign="center"
       >
-        Sign up
+        My Mandal-Art
       </Heading>
       {/* 소셜 회원가입 */}
       <Box display="flex" flexDirection="column" color="black">
         <Button
+          size="lg"
+          fontSize="md"
           className="googleSigninButton"
           onClick={handleSigninWithGoogle}
           isLoading={isLoadingSigninWithGoogle}
-          leftIcon={<BsGoogle />}
+          leftIcon={<FcGoogle />}
           border="none"
           boxShadow="rgba(0, 0, 0, 0.16) 0px 1px 4px"
           variant="outline"
           isFullWidth
-          bg="primary"
-          _hover={{ bg: 'light_grey_2' }}
+          bg="highlight_lighter"
           sx={{
             '&.googleSigninButton': {
               boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px',
             },
           }}
         >
-          Sign up with Google
+          구글 계정으로 가입하기
         </Button>
         <Text fontSize="xs" color="error" textAlign="center" marginTop="5px">
           {googleWarning}
@@ -144,43 +157,73 @@ const Signup: FunctionComponent = () => {
       </Box>
       <Divider margin="30px 0" />
       {/* 가입 정보 입력 폼 */}
-      <Box marginBottom="50px">
+      <Box marginBottom="40px">
         {/* Email */}
         <FormControl isRequired marginBottom="15px">
-          <FormLabel id="1" htmlFor="email">
-            Email
+          <FormLabel id="1" htmlFor="email" marginBottom="1">
+            이메일
           </FormLabel>
-          <Input
-            id="email"
-            placeholder="Enter email"
-            focusBorderColor={'secondary'}
-            onChange={handleChangeEmail}
-            onClick={(e) => handleClickInput('email', e)}
-          />
+          <InputGroup size="lg">
+            <InputLeftElement
+              pointerEvents="none"
+              color="grey"
+              fontSize="20px"
+              children={<AiOutlineUser />}
+            />
+            <Input
+              id="email"
+              placeholder="이메일을 입력하세요."
+              focusBorderColor={'highlight'}
+              onChange={handleChangeEmail}
+              onClick={(e) => handleClickInput('email', e)}
+              value={email}
+              size="lg"
+            />
+            <InputRightElement
+              onClick={() => handleClickClear('email')}
+              children={
+                email.length > 0 ? <IoIosCloseCircle cursor="pointer" /> : ''
+              }
+            />
+          </InputGroup>
           <Text fontSize="xs" color="error" marginTop="5px">
             {emailWarning}
           </Text>
         </FormControl>
         {/* Password */}
         <FormControl isRequired>
-          <FormLabel id="2" htmlFor="password">
-            Password
+          <FormLabel id="2" htmlFor="password" marginBottom="1">
+            비밀번호
           </FormLabel>
-          <InputGroup size="md">
+          <InputGroup size="lg">
+            <InputLeftElement
+              pointerEvents="none"
+              color="grey"
+              fontSize="20px"
+              children={<RiLockPasswordLine />}
+            />
             <Input
               id="password"
-              pr="4.5rem"
-              type={isShowPassword ? 'text' : 'password'}
-              placeholder="Enter password"
-              focusBorderColor={'secondary'}
+              type="password"
+              placeholder="비밀번호를 입력하세요."
+              value={password}
               onChange={handleChangePassword}
               onClick={(e) => handleClickInput('password', e)}
+              focusBorderColor={'highlight'}
+              size="lg"
             />
-            <InputRightElement width="4.5rem">
-              <Button h="1.75rem" size="sm" onClick={handleShowPassword}>
-                {isShowPassword ? <FaEyeSlash /> : <FaEye />}
-              </Button>
-            </InputRightElement>
+            <InputRightElement
+              children={
+                password.length > 0 ? (
+                  <IoIosCloseCircle
+                    cursor="pointer"
+                    onClick={() => handleClickClear('password')}
+                  />
+                ) : (
+                  ''
+                )
+              }
+            />
           </InputGroup>
           <Text fontSize="xs" color="error" marginTop="5px">
             {passwordWarning}
@@ -190,6 +233,7 @@ const Signup: FunctionComponent = () => {
       {/* 회원가입 버튼 */}
       <Box display="flex" flexDirection="column" color="black">
         <Button
+          size="lg"
           className="signupButton"
           onClick={handleSignupWithEmail}
           type="submit"
@@ -198,26 +242,24 @@ const Signup: FunctionComponent = () => {
           isFullWidth
           isLoading={isLoadingSignupWithEmail}
           border="none"
-          bg="secondary"
+          bg="highlight"
           boxShadow="rgba(0, 0, 0, 0.16) 0px 1px 4px"
-          sx={{
-            '&.signupButton:hover': {
-              background: 'secondary',
-            },
-          }}
+          fontWeight="bold"
+          fontSize="md"
+          _hover={{ bg: 'highlight_darker' }}
         >
-          Sign up
+          계정 생성하기
         </Button>
         <Text fontSize="xs" color="error" textAlign="center" marginTop="5px">
           {signupWarning}
         </Text>
       </Box>
       <Divider margin="30px 0" />
-      {/* Sign in 안내 */}
+      {/* 로그인 안내 */}
       <Center display="flex" flexDirection="column">
-        <Text color="light_black">Already have an account?</Text>
-        <Link color="highlight" href="/auth/signin" fontWeight="bold">
-          Sign in
+        <Text color="light_black">이미 계정이 있으신가요?</Text>
+        <Link color="secondary" href="/auth/signin" fontWeight="bold">
+          로그인
         </Link>
       </Center>
     </Container>
