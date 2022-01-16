@@ -38,8 +38,14 @@ const Signin: FunctionComponent = () => {
   } = useSigninWithGoogle();
 
   const handleClickClear = (type: 'email' | 'password') => {
-    if (type === 'email') setEmail('');
-    if (type === 'password') setPassword('');
+    if (type === 'email') {
+      setEmail('');
+      if (emailWarning !== '') setEmailWarning('');
+    }
+    if (type === 'password') {
+      setPassword('');
+      if (passwordWarning !== '') setPasswordWarning('');
+    }
   };
 
   const handleChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
@@ -82,16 +88,16 @@ const Signin: FunctionComponent = () => {
   };
 
   return (
-    <Container padding="50px 0">
+    <Container padding="50px 0" maxWidth="40ch">
       <Heading
         as="h2"
-        fontSize="xx-large"
+        fontSize="xxx-large"
         fontWeight="bold"
         color="black"
-        marginBottom="30px"
+        marginBottom="40px"
         textAlign="center"
       >
-        로그인
+        My Mandal-Art
       </Heading>
       {/* 소셜 로그인 */}
       <Box display="flex" flexDirection="column" color="black">
@@ -99,18 +105,19 @@ const Signin: FunctionComponent = () => {
           className="googleSigninButton"
           onClick={handleSigninWithGoogle}
           isLoading={isLoadingSigninWithGoogle}
-          leftIcon={<FcGoogle fontSize="19px" />}
-          border="none"
-          boxShadow="rgba(0, 0, 0, 0.16) 0px 1px 4px"
-          variant="outline"
           isFullWidth
-          bg="primary"
-          _hover={{ bg: 'primary_darker' }}
+          variant="outline"
+          size="lg"
+          fontSize="md"
+          border="none"
+          bg="highlight_lighter"
+          boxShadow="rgba(0, 0, 0, 0.16) 0px 1px 4px"
           sx={{
             '&.googleSigninButton': {
               boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px',
             },
           }}
+          leftIcon={<FcGoogle fontSize="19px" />}
         >
           구글 계정으로 로그인하기
         </Button>
@@ -123,10 +130,10 @@ const Signin: FunctionComponent = () => {
       <Box marginBottom="40px">
         {/* Email */}
         <FormControl isRequired marginBottom="15px">
-          <FormLabel id="1" htmlFor="email">
+          <FormLabel id="1" htmlFor="email" marginBottom="1">
             이메일
           </FormLabel>
-          <InputGroup size="md">
+          <InputGroup size="lg">
             <InputLeftElement
               pointerEvents="none"
               color="grey"
@@ -139,6 +146,7 @@ const Signin: FunctionComponent = () => {
               focusBorderColor={'highlight'}
               onChange={handleChangeEmail}
               value={email}
+              size="lg"
             />
             <InputRightElement
               onClick={() => handleClickClear('email')}
@@ -153,10 +161,10 @@ const Signin: FunctionComponent = () => {
         </FormControl>
         {/* Password */}
         <FormControl isRequired>
-          <FormLabel id="2" htmlFor="password">
+          <FormLabel id="2" htmlFor="password" marginBottom="1">
             비밀번호
           </FormLabel>
-          <InputGroup size="md">
+          <InputGroup size="lg">
             <InputLeftElement
               pointerEvents="none"
               color="grey"
@@ -171,6 +179,7 @@ const Signin: FunctionComponent = () => {
               onChange={handleChangePassword}
               value={password}
               onKeyPress={handleKeyPress}
+              size="lg"
             />
             <InputRightElement
               children={
@@ -194,29 +203,36 @@ const Signin: FunctionComponent = () => {
       <Box display="flex" flexDirection="column" color="black">
         <Button
           className="signinButton"
-          onClick={handleSigninWithEmail}
           type="submit"
-          variant="outline"
-          color="primary"
           isFullWidth
+          onClick={handleSigninWithEmail}
           isLoading={isLoadingSigninWithEmail}
-          border="none"
+          variant="outline"
           bg="highlight"
-          boxShadow="rgba(0, 0, 0, 0.16) 0px 1px 4px"
+          size="lg"
+          color="primary"
+          fontSize="md"
           fontWeight="bold"
-          fontSize="large"
+          border="none"
+          boxShadow="rgba(0, 0, 0, 0.16) 0px 1px 4px"
           _hover={{ bg: 'highlight_darker' }}
         >
           로그인
         </Button>
-        <Text fontSize="xs" color="error" textAlign="center" marginTop="5px">
+        <Text
+          fontSize="xs"
+          color="error"
+          textAlign="center"
+          marginTop="5px"
+          whiteSpace="pre-wrap"
+        >
           {signinWarning}
         </Text>
       </Box>
       <Divider margin="30px 0" />
       {/* 회원가입 안내 */}
       <Center display="flex" flexDirection="column">
-        <Text color="light_black">이미 계정이 있으신가요?</Text>
+        <Text color="light_black">My Mandal-Art 계정이 없으신가요?</Text>
         <Link color="secondary" href="/auth/signup" fontWeight="bold">
           회원가입
         </Link>

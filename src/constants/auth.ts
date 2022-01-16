@@ -16,6 +16,6 @@ export const EMAIL_NOT_EXIST_TEXT = '이메일을 다시 확인해 주세요.';
 export const INVALIED_EMAIL_TEXT = '유효하지 않은 이메일입니다.';
 export const WRONG_PASSWORD_TEXT = '비밀번호를 다시 확인해 주세요.';
 export const AUTH_TOO_MANY_REQUEST_TEXT =
-  '단시간 동안 과도한 로그인 실패로 인하여 계정에 접근할 수 없습니다. 잠시 후 다시 시도해 주세요.';
+  '단시간 동안 과도한 로그인 실패로 인하여 계정에 접근할 수 없습니다.\n잠시 후 다시 시도해 주세요.';
 export const SIGNIN_FAILED_TEXT =
   '로그인 도중 오류가 발생했습니다. 개발자에게 문의해 주세요.';
