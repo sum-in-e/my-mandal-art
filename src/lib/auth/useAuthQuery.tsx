@@ -2,6 +2,7 @@ import { useMutation, UseMutationResult } from 'react-query';
 import { useRouter } from 'next/router';
 import { FirebaseError } from 'firebase/app';
 import { UserCredential } from 'firebase/auth';
+import { setCookie } from 'nookies';
 
 import {
   signupWithEmailApi,
@@ -25,6 +26,7 @@ import {
   SIGNIN_FAILED_TEXT,
   INVALIED_EMAIL_TEXT,
 } from 'constants/auth';
+import { auth } from 'src/firebaseClient';
 
 /**
  * 이메일 회원가입을 하는 mutation입니다.
@@ -43,7 +45,14 @@ const useSignupWithEmail = (): UseMutationResult<
   const router = useRouter();
 
   return useMutation(signupWithEmailApi, {
-    onSuccess: (result) => {
+    onSuccess: async (result: UserCredential) => {
+      const { refreshToken, uid } = result.user;
+      const idToken = await result.user.getIdToken();
+
+      setCookie(null, 'it', idToken); // 가입 성공한 유저의 ID 토큰을 쿠키에 저장 -> setCookie(ctx, name, value, options)
+      setCookie(null, 'rt', refreshToken);
+      setCookie(null, 'uid', uid);
+
       router.push('/mandalArt/write');
     },
     onError: (error, variables) => {
@@ -78,7 +87,13 @@ const useSigninWithEmail = (): UseMutationResult<
   const router = useRouter();
 
   return useMutation(signinWithEmailApi, {
-    onSuccess: (result) => {
+    onSuccess: async (result) => {
+      const { refreshToken, uid } = result.user;
+      const idToken = await result.user.getIdToken();
+
+      setCookie(null, 'it', idToken); // 가입 성공한 유저의 ID 토큰을 쿠키에 저장 -> setCookie(ctx, name, value, options)
+      setCookie(null, 'rt', refreshToken);
+      setCookie(null, 'uid', uid);
       router.push('/mandalArt/write');
     },
     onError: (error, variables) => {
@@ -111,7 +126,13 @@ const useSigninWithGoogle = (): UseMutationResult<
   const router = useRouter();
 
   return useMutation(signinWithGoogleApi, {
-    onSuccess: (result) => {
+    onSuccess: async (result) => {
+      const { refreshToken, uid } = result.user;
+      const idToken = await result.user.getIdToken();
+
+      setCookie(null, 'it', idToken); // 가입 성공한 유저의 ID 토큰을 쿠키에 저장 -> setCookie(ctx, name, value, options)
+      setCookie(null, 'rt', refreshToken);
+      setCookie(null, 'uid', uid);
       router.push('/mandalArt/write');
     },
     onError: (error, variables) => {

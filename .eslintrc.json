@@ -7,54 +7,35 @@
   },
   "parser": "@typescript-eslint/parser", // eslint가 타입스크립트를 해석할 수 있도록 지정
   "extends": [
-    "next",
-    "prettier/prettier",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:@typescript-eslint/eslint-recommended",
-    "eslint:recommended"
+    "next/core-web-vitals",
+    "airbnb",
+    "airbnb/hooks",
+    "airbnb-typescript",
+    "plugin:prettier/recommended"
   ],
   "plugins": [
-    "@typescript-eslint", // 타입스크립트 문법
-    "react-hooks",
-    "react", // 리액트 문법
-    "simple-import-sort",
-    "prettier"
+    "@typescript-eslint" // 타입스크립트 문법
   ],
   "rules": {
-    "no-console": 1,
-    "prettier/prettier": "error",
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": [
-      "warn",
+    "no-restricted-imports": [
+      "error",
       {
-        "enableDangerousAutofixThisMayCauseInfiniteLoops": true
+        "patterns": ["@mui/*/*/*", "!@mui/material/test-utils/*"]
       }
     ],
-    "@typescript-eslint/no-redeclare": 0,
-    "@typescript-eslint/no-unused-vars": ["warn"],
-    "simple-import-sort/imports": "error",
-    "simple-import-sort/exports": "error",
-    "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 0 }],
-    "comma-dangle": ["error", "always-multiline"],
-    "object-curly-spacing": ["error", "always"],
-    "space-in-parens": ["error", "never"],
-    "computed-property-spacing": ["error", "never"],
-    "comma-spacing": ["error", { "before": false, "after": true }],
-    "eol-last": ["error", "always"],
-    "quotes": ["error", "single"],
-    "no-tabs": "error",
-    "semi": ["error", "never"],
-    "no-return-await": "error",
-    "no-trailing-spaces": "error",
-    "prefer-const": "error",
-    "no-var": "error",
-    "import/no-anonymous-default-export": 0,
-    "object-shorthand": "error",
-    "padding-line-between-statements": [
-      "error",
-      { "blankLine": "always", "prev": "*", "next": "return" }
-    ],
-    "no-unused-vars": "warn",
-    "no-else-return": "error"
+    "import/no-cycle": "off",
+    "@typescript-eslint/no-unused-vars": "error",
+    "react/jsx-props-no-spreading": "off",
+    "jsx-a11y/anchor-is-valid": "off",
+    "no-param-reassign": "off",
+    "max-len": ["error", { "code": 120 }],
+    "react/function-component-definition": "off",
+    "no-alert": "off",
+    "no-console": "off",
+    "react/require-default-props": "off",
+    "import/prefer-default-export": "off"
+  },
+  "parserOptions": {
+    "project": "./tsconfig.json"
   }
 }

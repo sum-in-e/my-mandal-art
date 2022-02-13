@@ -4,7 +4,7 @@ import {
   signInWithPopup,
   UserCredential,
 } from 'firebase/auth';
-import { auth, googleAuthProvider } from 'src/firebase';
+import { auth, googleAuthProvider } from 'src/firebaseClient';
 import { SigninWithEmailProps, SignupWithEmailProps } from 'lib/auth/authType';
 
 /**
