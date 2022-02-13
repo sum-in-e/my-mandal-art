@@ -49,9 +49,16 @@ const useSignupWithEmail = (): UseMutationResult<
       const { refreshToken, uid } = result.user;
       const idToken = await result.user.getIdToken();
 
-      setCookie(null, 'it', idToken); // 가입 성공한 유저의 ID 토큰을 쿠키에 저장 -> setCookie(ctx, name, value, options)
-      setCookie(null, 'rt', refreshToken);
-      setCookie(null, 'uid', uid);
+      // 가입 성공한 유저의 ID 토큰을 쿠키에 저장 -> setCookie(ctx, name, value, options)
+      setCookie(null, 'it', idToken, {
+        path: '/',
+      });
+      setCookie(null, 'rt', refreshToken, {
+        path: '/',
+      });
+      setCookie(null, 'uid', uid, {
+        path: '/',
+      });
 
       router.push('/mandalArt/write');
     },
@@ -91,9 +98,16 @@ const useSigninWithEmail = (): UseMutationResult<
       const { refreshToken, uid } = result.user;
       const idToken = await result.user.getIdToken();
 
-      setCookie(null, 'it', idToken); // 가입 성공한 유저의 ID 토큰을 쿠키에 저장 -> setCookie(ctx, name, value, options)
-      setCookie(null, 'rt', refreshToken);
-      setCookie(null, 'uid', uid);
+      // 가입 성공한 유저의 ID 토큰을 쿠키에 저장 -> setCookie(ctx, name, value, options)
+      setCookie(null, 'it', idToken, {
+        path: '/',
+      });
+      setCookie(null, 'rt', refreshToken, {
+        path: '/',
+      });
+      setCookie(null, 'uid', uid, {
+        path: '/',
+      });
       router.push('/mandalArt/write');
     },
     onError: (error, variables) => {
@@ -130,10 +144,17 @@ const useSigninWithGoogle = (): UseMutationResult<
       const { refreshToken, uid } = result.user;
       const idToken = await result.user.getIdToken();
 
-      setCookie(null, 'it', idToken); // 가입 성공한 유저의 ID 토큰을 쿠키에 저장 -> setCookie(ctx, name, value, options)
-      setCookie(null, 'rt', refreshToken);
-      setCookie(null, 'uid', uid);
-      router.push('/mandalArt/write');
+      // 가입 성공한 유저의 ID 토큰을 쿠키에 저장 -> setCookie(ctx, name, value, options)
+      setCookie(null, 'it', idToken, {
+        path: '/',
+      });
+      setCookie(null, 'rt', refreshToken, {
+        path: '/',
+      });
+      setCookie(null, 'uid', uid, {
+        path: '/',
+      });
+      router.push('/mypage/profile');
     },
     onError: (error, variables) => {
       if (error.code === 'auth/popup-closed-by-user') {
