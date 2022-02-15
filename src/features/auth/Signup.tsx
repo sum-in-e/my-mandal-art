@@ -1,4 +1,4 @@
-import { FunctionComponent, ChangeEvent, useState, KeyboardEvent } from 'react';
+import { FunctionComponent, ChangeEvent, useState, MouseEvent } from 'react';
 import {
   Box,
   Button,
@@ -14,24 +14,38 @@ import {
   Link,
   InputLeftElement,
 } from '@chakra-ui/react';
-import { Divider } from '@chakra-ui/react';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
+import { Divider } from '@chakra-ui/react';
+
+import {
+  useSignupWithEmail,
+  useSigninWithGoogle,
+} from 'features/auth/useAuthQuery';
+import {
+  EMAIL_REQUIERED_TEXT,
+  EMAIL_RULE_GUIDANCE_TEXT,
+  PW_REQUIERED_TEXT,
+  PW_RULE_GUIDANCE_TEXT,
+} from 'constants/auth';
 import { IoIosCloseCircle } from 'react-icons/io';
 import { AiOutlineUser } from 'react-icons/ai';
 import { RiLockPasswordLine } from 'react-icons/ri';
 
-import { useSigninWithEmail, useSigninWithGoogle } from 'lib/auth/useAuthQuery';
+const Signup: FunctionComponent = () => {
+  const REG_EMAIL =
+    /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+  const REG_PASSWORD = /^(?=.*[a-zA-Z])((?=.*\d)(?=.*\W)).{8,16}$/;
 
-const Signin: FunctionComponent = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [emailWarning, setEmailWarning] = useState<string>('');
   const [passwordWarning, setPasswordWarning] = useState<string>('');
-  const [signinWarning, setSigninWarning] = useState<string>('');
+  const [signupWarning, setSignupWarning] = useState<string>('');
   const [googleWarning, setGoogleWarning] = useState<string>('');
 
-  const { mutate: signinWithEmail, isLoading: isLoadingSigninWithEmail } =
-    useSigninWithEmail();
+  const { mutate: signupWithEmail, isLoading: isLoadingSignupWithEmail } =
+    useSignupWithEmail();
   const {
     mutate: signinWithGoogleMutate,
     isLoading: isLoadingSigninWithGoogle,
@@ -40,35 +54,61 @@ const Signin: FunctionComponent = () => {
   const handleClickClear = (type: 'email' | 'password') => {
     if (type === 'email') {
       setEmail('');
-      if (emailWarning !== '') setEmailWarning('');
+      setEmailWarning(EMAIL_REQUIERED_TEXT);
     }
     if (type === 'password') {
       setPassword('');
-      if (passwordWarning !== '') setPasswordWarning('');
+      setPasswordWarning(PW_REQUIERED_TEXT);
     }
   };
 
+  const handleSetPasswordWarning = (value: string) => {
+    if (value === '') setPasswordWarning(PW_REQUIERED_TEXT);
+    if (value.length > 0 && !REG_PASSWORD.test(value))
+      setPasswordWarning(PW_RULE_GUIDANCE_TEXT);
+    if (value.length > 0 && REG_PASSWORD.test(value)) setPasswordWarning('');
+  };
+
+  const handleSetEmailWarning = (value: string) => {
+    if (value === '') setEmailWarning(EMAIL_REQUIERED_TEXT);
+    if (value.length > 0 && !REG_EMAIL.test(value))
+      setEmailWarning(EMAIL_RULE_GUIDANCE_TEXT);
+    if (value.length > 0 && REG_EMAIL.test(value)) setEmailWarning('');
+  };
+
   const handleChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-    if (emailWarning !== '') setEmailWarning('');
+    const value = e.target.value;
+    setEmail(value);
+    handleSetEmailWarning(value);
   };
 
   const handleChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-    if (passwordWarning !== '') setPasswordWarning('');
+    const value = e.target.value;
+    setPassword(value);
+    handleSetPasswordWarning(value);
+  };
+
+  const handleClickInput = (
+    type: 'email' | 'password',
+    e: MouseEvent<HTMLInputElement>,
+  ) => {
+    const value = (e.target as HTMLInputElement).value;
+
+    if (type === 'email') handleSetEmailWarning(value);
+    if (type === 'password') handleSetPasswordWarning(value);
   };
 
   /**
-   * 이메일 로그인을 실행하는 함수입니다.
+   * 이메일 회원가입을 실행하는 함수입니다.
    */
-  const handleSigninWithEmail = () => {
-    if (email !== '' && password !== '') {
-      signinWithEmail({
+  const handleSignupWithEmail = () => {
+    if (emailWarning === '' && passwordWarning == '') {
+      signupWithEmail({
         email,
         password,
         setEmailWarning,
         setPasswordWarning,
-        setSigninWarning,
+        setSignupWarning,
       });
     }
   };
@@ -78,13 +118,6 @@ const Signin: FunctionComponent = () => {
    */
   const handleSigninWithGoogle = () => {
     signinWithGoogleMutate({ setGoogleWarning });
-  };
-
-  /**
-   * 비밀번호 input의 키 입력을 감지하여 Enter 입력 시 이메일 로그인을 실행하는 함수입니다.
-   */
-  const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') handleSigninWithEmail();
   };
 
   return (
@@ -99,34 +132,34 @@ const Signin: FunctionComponent = () => {
       >
         My Mandal-Art
       </Heading>
-      {/* 소셜 로그인 */}
+      {/* 소셜 회원가입 */}
       <Box display="flex" flexDirection="column" color="black">
         <Button
+          size="lg"
+          fontSize="md"
           className="googleSigninButton"
           onClick={handleSigninWithGoogle}
           isLoading={isLoadingSigninWithGoogle}
-          isFullWidth
-          variant="outline"
-          size="lg"
-          fontSize="md"
+          leftIcon={<FcGoogle />}
           border="none"
-          bg="highlight_lighter"
           boxShadow="rgba(0, 0, 0, 0.16) 0px 1px 4px"
+          variant="outline"
+          isFullWidth
+          bg="highlight_lighter"
           sx={{
             '&.googleSigninButton': {
               boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px',
             },
           }}
-          leftIcon={<FcGoogle fontSize="19px" />}
         >
-          구글 계정으로 로그인하기
+          구글 계정으로 가입하기
         </Button>
         <Text fontSize="xs" color="error" textAlign="center" marginTop="5px">
           {googleWarning}
         </Text>
       </Box>
       <Divider margin="30px 0" />
-      {/* 로그인 정보 입력 폼 */}
+      {/* 가입 정보 입력 폼 */}
       <Box marginBottom="40px">
         {/* Email */}
         <FormControl isRequired marginBottom="15px">
@@ -145,6 +178,7 @@ const Signin: FunctionComponent = () => {
               placeholder="이메일을 입력하세요."
               focusBorderColor={'highlight'}
               onChange={handleChangeEmail}
+              onClick={(e) => handleClickInput('email', e)}
               value={email}
               size="lg"
             />
@@ -175,10 +209,10 @@ const Signin: FunctionComponent = () => {
               id="password"
               type="password"
               placeholder="비밀번호를 입력하세요."
-              focusBorderColor={'highlight'}
-              onChange={handleChangePassword}
               value={password}
-              onKeyPress={handleKeyPress}
+              onChange={handleChangePassword}
+              onClick={(e) => handleClickInput('password', e)}
+              focusBorderColor={'highlight'}
               size="lg"
             />
             <InputRightElement
@@ -199,46 +233,40 @@ const Signin: FunctionComponent = () => {
           </Text>
         </FormControl>
       </Box>
-      {/* 로그인 버튼 */}
+      {/* 회원가입 버튼 */}
       <Box display="flex" flexDirection="column" color="black">
         <Button
-          className="signinButton"
-          type="submit"
-          isFullWidth
-          onClick={handleSigninWithEmail}
-          isLoading={isLoadingSigninWithEmail}
-          variant="outline"
-          bg="highlight"
           size="lg"
+          className="signupButton"
+          onClick={handleSignupWithEmail}
+          type="submit"
+          variant="outline"
           color="primary"
-          fontSize="md"
-          fontWeight="bold"
+          isFullWidth
+          isLoading={isLoadingSignupWithEmail}
           border="none"
+          bg="highlight"
           boxShadow="rgba(0, 0, 0, 0.16) 0px 1px 4px"
+          fontWeight="bold"
+          fontSize="md"
           _hover={{ bg: 'highlight_darker' }}
         >
-          로그인
+          계정 생성하기
         </Button>
-        <Text
-          fontSize="xs"
-          color="error"
-          textAlign="center"
-          marginTop="5px"
-          whiteSpace="pre-wrap"
-        >
-          {signinWarning}
+        <Text fontSize="xs" color="error" textAlign="center" marginTop="5px">
+          {signupWarning}
         </Text>
       </Box>
       <Divider margin="30px 0" />
-      {/* 회원가입 안내 */}
+      {/* 로그인 안내 */}
       <Center display="flex" flexDirection="column">
-        <Text color="light_black">My Mandal-Art 계정이 없으신가요?</Text>
-        <Link color="secondary" href="/auth/signup" fontWeight="bold">
-          회원가입
+        <Text color="light_black">이미 계정이 있으신가요?</Text>
+        <Link color="secondary" href="/auth/signin" fontWeight="bold">
+          로그인
         </Link>
       </Center>
     </Container>
   );
 };
 
-export default Signin;
+export default Signup;

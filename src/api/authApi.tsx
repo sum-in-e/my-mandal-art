@@ -5,7 +5,10 @@ import {
   UserCredential,
 } from 'firebase/auth';
 import { auth, googleAuthProvider } from 'src/firebaseClient';
-import { SigninWithEmailProps, SignupWithEmailProps } from 'lib/auth/authType';
+import {
+  SigninWithEmailProps,
+  SignupWithEmailProps,
+} from 'features/auth/authType';
 
 /**
  * 이메일 회원가입 api입니다.

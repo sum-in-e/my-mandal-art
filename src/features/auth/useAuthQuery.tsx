@@ -8,12 +8,12 @@ import {
   signupWithEmailApi,
   signinWithEmailApi,
   signinWithGoogleApi,
-} from 'lib/auth/authApi';
+} from 'api/authApi';
 import {
   SignupWithEmailProps,
   SigninWithEmailProps,
   SigninWithGoogleProps,
-} from 'lib/auth/authType';
+} from 'features/auth/authType';
 import {
   EMAIL_RULE_GUIDANCE_TEXT,
   EMAIL_EXIST_TEXT,

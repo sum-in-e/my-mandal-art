@@ -5,7 +5,7 @@ import type {
   NextPage,
 } from 'next';
 import Head from 'next/head';
-import { Signup } from 'components/Auth';
+import { Signup } from 'features/auth';
 import { useRouter } from 'next/router';
 import nookies from 'nookies';
 import { getAuth } from 'firebase-admin/auth';

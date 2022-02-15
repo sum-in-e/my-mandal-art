@@ -5,7 +5,7 @@ import type {
 } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { Profile } from 'components/MyPage';
+import { Profile } from 'features/myPage';
 import { getAuth } from 'firebase-admin/auth';
 import nookies from 'nookies';
 import { useEffect } from 'react';

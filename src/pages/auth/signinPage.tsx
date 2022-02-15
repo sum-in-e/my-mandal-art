@@ -5,7 +5,7 @@ import type {
   InferGetServerSidePropsType,
 } from 'next';
 import Head from 'next/head';
-import { Signin } from 'components/Auth';
+import { Signin } from 'features/auth';
 import nookies from 'nookies';
 import { getAuth } from 'firebase-admin/auth';
 import { useRouter } from 'next/router';
