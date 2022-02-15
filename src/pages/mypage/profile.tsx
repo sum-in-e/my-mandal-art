@@ -56,6 +56,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
     if (idToken) {
       //  idToken 있는데 오류 발생한 경우 -> 세션 만료
+      // TODO: 쿠키 제거
       return {
         props: { message: '로그인 세션이 만료되었습니다.' },
       };

@@ -50,6 +50,7 @@ const useSignupWithEmail = (): UseMutationResult<
       const idToken = await result.user.getIdToken();
 
       // 가입 성공한 유저의 ID 토큰을 쿠키에 저장 -> setCookie(ctx, name, value, options)
+      // path 미 지정 시 가입 페이지 path로 저장되어서 만다라트 페이지 등에서는 쿠키가 없는 상태가 되버림.
       setCookie(null, 'it', idToken, {
         path: '/',
       });
@@ -60,6 +61,7 @@ const useSignupWithEmail = (): UseMutationResult<
         path: '/',
       });
 
+      //TODO: 유저 생성과 동시에 db(firestore)에 유저uid로 collection 생성(그래야 추후 만다라트 생성 시 콜렉션 하위에 mandalArtId로 데이터 추가함)
       router.push('/mandalArt/write');
     },
     onError: (error, variables) => {
@@ -154,7 +156,7 @@ const useSigninWithGoogle = (): UseMutationResult<
       setCookie(null, 'uid', uid, {
         path: '/',
       });
-      router.push('/mypage/profile');
+      router.push('/mandalArt/write');
     },
     onError: (error, variables) => {
       if (error.code === 'auth/popup-closed-by-user') {

@@ -4,12 +4,9 @@ import { Container } from '@chakra-ui/react';
 import { auth } from 'src/firebaseClient';
 
 const Write: FunctionComponent = () => {
-  // 유저 로그인한거 접근해야함.
-  // onAuthStateChanged를 이용해서 인증 상태 관찰자 설정 및 사용자 데이터 가져오는데
-  // 리액트의 경우 이걸 useEffect에 하겠지만
-  // next 프로젝트니까 get
-
-  // console.log('currentUser', auth.currentUser);
+  // 분기처리
+  // 저장 했을 때 로그인 안한 경우에는 클라이언트에서 물고 있다가 회원가입 후 저장되게 해야하고
+  // 저장 했을 때 로그인 되어있는 경우에는 저장 하면 됨
   return <Container>write 페이지</Container>;
 };
 
