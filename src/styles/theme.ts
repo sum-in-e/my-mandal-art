@@ -1,22 +1,22 @@
 import { extendTheme } from '@chakra-ui/react';
-import { mode } from '@chakra-ui/theme-tools';
+import { colors } from './style';
 
 const overrides = {
   colors: {
-    primary: '#ffffff', // 70%
-    primary_darker: '#EEEEEE',
-    secondary: '#554516', // 25%
-    secondary_darker: '#4D4637',
-    highlight: '#008A65', // 5%
-    highlight_darker: '#00704D',
+    primary: colors.primary,
+    primary_darker: colors.primary_darker,
+    secondary: colors.secondary,
+    secondary_darker: colors.secondary_darker,
+    highlight: colors.highlight,
+    highlight_darker: colors.highlight_darker,
     highlight_lighter: '#E9FEF4',
-    error: '#f03e3e',
-    success: '#008A61', // 임의 색상
-    black: '#333333',
-    light_black: '#5E5E5E',
-    grey: '#C6C6C6',
-    light_grey_1: '#E0E0E0',
-    light_grey_2: '#f0f0f0',
+    error: colors.error,
+    success: colors.success,
+    black: colors.black,
+    light_black: colors.light_black,
+    grey: colors.grey,
+    light_grey_1: colors.light_grey_1,
+    light_grey_2: colors.light_grey_2,
   },
   fonts: {
     heading: `Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif`,
