@@ -33,7 +33,9 @@
     "no-alert": "off",
     "no-console": "off",
     "react/require-default-props": "off",
-    "import/prefer-default-export": "off"
+    "import/prefer-default-export": "off",
+    "react-hooks/rules-of-hooks": "error", // React Hooks 규칙 강제
+    "react-hooks/exhaustive-deps": "warn" // React Hooks 규칙 강제
   },
   "parserOptions": {
     "project": "./tsconfig.json"
