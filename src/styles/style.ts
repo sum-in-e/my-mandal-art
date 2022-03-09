@@ -1,11 +1,11 @@
 const colors = {
   primary: '#ffffff', // 70%
-  primary_darker: '#EEEEEE',
+  primary_dark: '#EEEEEE',
   secondary: '#554516', // 25%
-  secondary_darker: '#4D4637',
+  secondary_dark: '#4D4637',
   highlight: '#008A65', // 5%
-  highlight_darker: '#00704D',
-  highlight_lighter: '#E9FEF4',
+  highlight_dark: '#00704D',
+  highlight_light: '#E9FEF4',
   error: '#f03e3e',
   success: '#008A61', // 임의 색상
   black: '#333333',

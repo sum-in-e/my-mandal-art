@@ -4,12 +4,12 @@ import { colors } from './style';
 const overrides = {
   colors: {
     primary: colors.primary,
-    primary_darker: colors.primary_darker,
+    primary_dark: colors.primary_dark,
     secondary: colors.secondary,
-    secondary_darker: colors.secondary_darker,
+    secondary_dark: colors.secondary_dark,
     highlight: colors.highlight,
-    highlight_darker: colors.highlight_darker,
-    highlight_lighter: '#E9FEF4',
+    highlight_dark: colors.highlight_dark,
+    highlight_light: colors.highlight_light,
     error: colors.error,
     success: colors.success,
     black: colors.black,
