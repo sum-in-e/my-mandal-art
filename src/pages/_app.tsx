@@ -1,24 +1,29 @@
 import type { AppProps } from 'next/app';
 import { ChakraProvider } from '@chakra-ui/react';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { RecoilRoot } from 'recoil';
 
 import theme from 'src/styles/theme';
 import { Layout } from 'components/Layout';
-import { initializeApp } from 'firebase/app';
 import { firebaseCient } from 'src/firebaseClient';
+import { useEffect } from 'react';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient();
 
-  // firebase client 초기화 - 이렇게 해줘도 되는지 확인 필요
-  firebaseCient;
+  useEffect(() => {
+    // firebase client 초기화
+    firebaseCient;
+  }, []);
 
   return (
     <ChakraProvider resetCSS={true} theme={theme}>
       <QueryClientProvider client={queryClient}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
+        <RecoilRoot>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </RecoilRoot>
       </QueryClientProvider>
     </ChakraProvider>
   );
