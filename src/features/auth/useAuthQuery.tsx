@@ -156,7 +156,7 @@ const useSigninWithGoogle = (): UseMutationResult<
       setCookie(null, 'uid', uid, {
         path: '/',
       });
-      router.push('/mandalArt/write');
+      router.push('/mandalArt/write/new');
     },
     onError: (error, variables) => {
       if (error.code === 'auth/popup-closed-by-user') {

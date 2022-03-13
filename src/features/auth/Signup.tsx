@@ -145,7 +145,7 @@ const Signup: FunctionComponent = () => {
           boxShadow="rgba(0, 0, 0, 0.16) 0px 1px 4px"
           variant="outline"
           isFullWidth
-          bg="highlight_lighter"
+          bg="highlight_light"
           sx={{
             '&.googleSigninButton': {
               boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px',
@@ -249,7 +249,7 @@ const Signup: FunctionComponent = () => {
           boxShadow="rgba(0, 0, 0, 0.16) 0px 1px 4px"
           fontWeight="bold"
           fontSize="md"
-          _hover={{ bg: 'highlight_darker' }}
+          _hover={{ bg: 'highlight_dark' }}
         >
           계정 생성하기
         </Button>

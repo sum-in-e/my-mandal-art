@@ -113,7 +113,7 @@ const Signin: FunctionComponent = () => {
           size="lg"
           fontSize="md"
           border="none"
-          bg="highlight_lighter"
+          bg="highlight_light"
           boxShadow="rgba(0, 0, 0, 0.16) 0px 1px 4px"
           sx={{
             '&.googleSigninButton': {
@@ -218,7 +218,7 @@ const Signin: FunctionComponent = () => {
           fontWeight="bold"
           border="none"
           boxShadow="rgba(0, 0, 0, 0.16) 0px 1px 4px"
-          _hover={{ bg: 'highlight_darker' }}
+          _hover={{ bg: 'highlight_dark' }}
         >
           로그인
         </Button>
